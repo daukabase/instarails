@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-	def index 
+	def index
 		@users = User.all
 	end
 
@@ -22,12 +22,26 @@ class UsersController < ApplicationController
 	end
 
 	def edit
+		@user = User.find(params[:id])
 	end
 
 	def update
+		@user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "Profile updated"
+      redirect_to @user
+    else
+      render 'edit'
+    end
 	end
 
 	def destroy
+		@user = User.find(params[:id])
+    if @user.destroy()
+      redirect_to @user
+    else
+      render 'destroy'
+    end
 	end
 
 	private
